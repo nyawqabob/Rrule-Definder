@@ -26,6 +26,10 @@ public class Data {
     public static final int AMOUNT_OF_DATES_TO_EXDATE_FOR_FOURTH_DATES = 1;
     public static final RruleFreqType FREQ_FOR_FOURTH_DATES = RruleFreqType.MINUTELY;
 
+    public static final Long INTERVAL_FOR_FIFTH_DATES = 1L;
+    public static final int AMOUNT_OF_DATES_TO_EXDATE_FOR_FIFTH_DATES = 167;
+    public static final RruleFreqType FREQ_FOR_FIFTH_DATES = RruleFreqType.HOURLY;
+
     public static List<Event> getFirstEvents() {
         List<UnparsedEvent> unparsedEvents = new ArrayList<>();
         unparsedEvents.add(new UnparsedEvent("11/21/2018 11:30:00", "11/21/2018 12:30:00"));
@@ -60,5 +64,14 @@ public class Data {
         unparsedEvents.add(new UnparsedEvent("11/21/2018 12:40:00", "11/21/2018 12:50:00"));
         return EventParser.unparsedToParsed(unparsedEvents);
     }
+    public static List<Event> getFifthEvents() {
+        List<UnparsedEvent> unparsedEvents = new ArrayList<>();
+        unparsedEvents.add(new UnparsedEvent("11/21/2018 11:00:00", "11/21/2018 12:00:00"));
+        unparsedEvents.add(new UnparsedEvent("11/28/2018 11:00:00", "11/28/2018 12:00:00"));
+        unparsedEvents.add(new UnparsedEvent("11/28/2018 12:00:00", "11/28/2018 12:30:00"));
+        unparsedEvents.add(new UnparsedEvent("11/28/2018 13:00:00", "11/28/2018 13:50:00"));
+        return EventParser.unparsedToParsed(unparsedEvents);
+    }
+
 }
 

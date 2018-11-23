@@ -72,4 +72,17 @@ public class RruleDefinderTest {
         Assert.assertEquals(rrule.getExDates().size(), Data.AMOUNT_OF_DATES_TO_EXDATE_FOR_FOURTH_DATES);
     }
 
+    @Test
+    public void shouldReturnFreqHourlyAndInterval() {
+        //given
+        Data.getFifthEvents().forEach(x -> eventHandler.addEvent(x));
+        eventHandler.sortEvents();
+        //when
+        rruleDefinder.defineRruleExDates(eventHandler.getEvents());
+        //then
+        Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_FIFTH_DATES);
+        Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_FIFTH_DATES);
+        Assert.assertEquals(rrule.getExDates().size(), Data.AMOUNT_OF_DATES_TO_EXDATE_FOR_FIFTH_DATES);
+    }
+
 }

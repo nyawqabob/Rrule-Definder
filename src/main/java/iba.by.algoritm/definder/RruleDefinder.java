@@ -36,7 +36,7 @@ public class RruleDefinder {
         }
     }
 
-    public void defineRruleFreqAndInterval(List<Date> startDatesOfEvents) {
+    private void defineRruleFreqAndInterval(List<Date> startDatesOfEvents) {
         final int amountOfIntervalsBetweenDates = startDatesOfEvents.size() - 1;
         int amountOfIntervalsWhichMultipleToHour = 0;
         int amountOfIntervalsWhichMultipleToDay = 0;
@@ -44,7 +44,7 @@ public class RruleDefinder {
         long minimumIntervalIfHour = DateConstants.HOURS_IN_ONE_HUNDRED_YEARS;
         long minimumIntervalIfDay = DateConstants.DAYS_IN_ONE_HUNDRED_YEARS;
         long minimumIntervalIfWeek = DateConstants.WEEKS_IN_ONE_HUNDRED_YEARS;
-        long minimumIntervalIfMinute = 0;
+        long minimumIntervalIfMinute = -1;
         for (int numberOfDates = 0; numberOfDates < amountOfIntervalsBetweenDates; numberOfDates++) {
             long timeBetweenEvents = startDatesOfEvents.get(numberOfDates + 1).getTime() - startDatesOfEvents.get(numberOfDates).getTime();
             if (timeBetweenEvents % DateConstants.MILLISECONDS_IN_WEEK == 0) {
@@ -54,7 +54,6 @@ public class RruleDefinder {
                     minimumIntervalIfWeek = -1;
                 }
                 amountOfIntervalsWhichMultipleToWeek++;
-                continue;
             }
             if (timeBetweenEvents % DateConstants.MILLISECONDS_IN_DAY == 0) {
                 if (timeBetweenEvents / DateConstants.MILLISECONDS_IN_DAY < minimumIntervalIfDay) {
@@ -63,7 +62,6 @@ public class RruleDefinder {
                     minimumIntervalIfDay = -1;
                 }
                 amountOfIntervalsWhichMultipleToDay++;
-                continue;
             }
             if (timeBetweenEvents % DateConstants.MILLISECONDS_IN_HOUR == 0) {
                 if (timeBetweenEvents / DateConstants.MILLISECONDS_IN_HOUR < minimumIntervalIfHour) {
@@ -77,10 +75,10 @@ public class RruleDefinder {
             minimumIntervalIfMinute = handleMinutelyFreq(startDatesOfEvents);
             break;
         }
-        if (amountOfIntervalsWhichMultipleToHour == amountOfIntervalsBetweenDates) {
-            rrule.setRruleFreqType(RruleFreqType.HOURLY);
-            if (minimumIntervalIfHour != -1) {
-                rrule.setInterval(minimumIntervalIfHour);
+        if (amountOfIntervalsWhichMultipleToWeek == amountOfIntervalsBetweenDates) {
+            rrule.setRruleFreqType(RruleFreqType.WEEKLY);
+            if (minimumIntervalIfWeek != -1) {
+                rrule.setInterval(minimumIntervalIfWeek);
             }
             return;
         }
@@ -91,14 +89,14 @@ public class RruleDefinder {
             }
             return;
         }
-        if (amountOfIntervalsWhichMultipleToWeek == amountOfIntervalsBetweenDates) {
-            rrule.setRruleFreqType(RruleFreqType.WEEKLY);
-            if (minimumIntervalIfWeek != -1) {
-                rrule.setInterval(minimumIntervalIfWeek);
+        if (amountOfIntervalsWhichMultipleToHour == amountOfIntervalsBetweenDates) {
+            rrule.setRruleFreqType(RruleFreqType.HOURLY);
+            if (minimumIntervalIfHour != -1) {
+                rrule.setInterval(minimumIntervalIfHour);
             }
             return;
         }
-        if (minimumIntervalIfMinute!=-1){
+        if (minimumIntervalIfMinute != -1) {
             rrule.setInterval(minimumIntervalIfMinute);
         }
 
