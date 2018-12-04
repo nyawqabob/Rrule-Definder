@@ -7,12 +7,9 @@ import java.util.List;
 public class Rrule {
     private RruleFreqType rruleFreqType;
     private Long interval;
-    private List<Date> exDates;
+    private List<Date> exDates = new ArrayList<>();
 
     public Rrule() {
-        rruleFreqType = RruleFreqType.MINUTELY;
-        interval = 1L;
-        exDates = new ArrayList<>();
     }
 
     public RruleFreqType getRruleFreqType() {

@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EventHandler {
+public class EventSorter {
 
     private List<Event> events;
     private boolean isSorted;
 
-    public EventHandler() {
+    public EventSorter() {
         events = new ArrayList<>();
         isSorted = false;
     }

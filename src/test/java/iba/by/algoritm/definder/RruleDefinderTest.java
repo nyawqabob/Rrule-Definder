@@ -1,32 +1,29 @@
 package iba.by.algoritm.definder;
 
 import iba.by.algoritm.entity.Rrule;
-import iba.by.algoritm.handler.EventHandler;
+import iba.by.algoritm.handler.EventSorter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class RruleDefinderTest {
 
-    private RruleDefinder rruleDefinder;
-    private Rrule rrule;
-    private EventHandler eventHandler;
+    private ExdatesDefiner exdatesDefiner = new ExdatesDefiner();
+    private EventSorter eventSorter;
 
 
     @Before
     public void setUp() {
-        eventHandler = new EventHandler();
-        rrule = new Rrule();
-        rruleDefinder = new RruleDefinder(rrule);
+        eventSorter = new EventSorter();
     }
 
     @Test
     public void shouldReturnFreqWeeklyAndIntervalTwo() {
         //given
-        Data.getFirstEvents().forEach(x -> eventHandler.addEvent(x));
-        eventHandler.sortEvents();
+        Data.getFirstEvents().forEach(x -> eventSorter.addEvent(x));
+        eventSorter.sortEvents();
         //when
-        rruleDefinder.defineRruleExDates(eventHandler.getEvents());
+        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_FIRST_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_FIRST_DATES);
@@ -36,10 +33,10 @@ public class RruleDefinderTest {
     @Test
     public void shouldReturnFreqDailyAndIntervalTwo() {
         //given
-        Data.getSecondEvents().forEach(x -> eventHandler.addEvent(x));
-        eventHandler.sortEvents();
+        Data.getSecondEvents().forEach(x -> eventSorter.addEvent(x));
+        eventSorter.sortEvents();
         //when
-        rruleDefinder.defineRruleExDates(eventHandler.getEvents());
+        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_SECOND_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_FSECOND_DATES);
@@ -49,10 +46,10 @@ public class RruleDefinderTest {
     @Test
     public void shouldReturnFreqHourlyAndIntervalThree() {
         //given
-        Data.getThirdEvents().forEach(x -> eventHandler.addEvent(x));
-        eventHandler.sortEvents();
+        Data.getThirdEvents().forEach(x -> eventSorter.addEvent(x));
+        eventSorter.sortEvents();
         //when
-        rruleDefinder.defineRruleExDates(eventHandler.getEvents());
+        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_THIRD_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_THIRD_DATES);
@@ -62,10 +59,10 @@ public class RruleDefinderTest {
     @Test
     public void shouldReturnFreqMinutelyAndIntervalTwentyFive() {
         //given
-        Data.getFourthEvents().forEach(x -> eventHandler.addEvent(x));
-        eventHandler.sortEvents();
+        Data.getFourthEvents().forEach(x -> eventSorter.addEvent(x));
+        eventSorter.sortEvents();
         //when
-        rruleDefinder.defineRruleExDates(eventHandler.getEvents());
+        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_FOURTH_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_FOURTH_DATES);
@@ -75,10 +72,10 @@ public class RruleDefinderTest {
     @Test
     public void shouldReturnFreqHourlyAndInterval() {
         //given
-        Data.getFifthEvents().forEach(x -> eventHandler.addEvent(x));
-        eventHandler.sortEvents();
+        Data.getFifthEvents().forEach(x -> eventSorter.addEvent(x));
+        eventSorter.sortEvents();
         //when
-        rruleDefinder.defineRruleExDates(eventHandler.getEvents());
+        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_FIFTH_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_FIFTH_DATES);

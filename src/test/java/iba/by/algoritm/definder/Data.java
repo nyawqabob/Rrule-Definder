@@ -32,8 +32,8 @@ public class Data {
 
     public static List<Event> getFirstEvents() {
         List<UnparsedEvent> unparsedEvents = new ArrayList<>();
-        unparsedEvents.add(new UnparsedEvent("11/21/2018 11:30:00", "11/21/2018 12:30:00"));
         unparsedEvents.add(new UnparsedEvent("12/19/2018 11:30:00", "12/19/2018 12:30:00"));
+        unparsedEvents.add(new UnparsedEvent("11/21/2018 11:30:00", "11/21/2018 12:30:00"));
         unparsedEvents.add(new UnparsedEvent("01/2/2019 11:30:00", "01/2/2019 12:30:00"));
         return EventParser.unparsedToParsed(unparsedEvents);
     }

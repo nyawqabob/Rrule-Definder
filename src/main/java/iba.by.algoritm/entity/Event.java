@@ -30,8 +30,8 @@ public class Event implements Comparable<Event> {
 
     @Override
     public int compareTo(Event anotherEvent) {
-        long thisEventDuration = this.getDateEnd().getTime() - getDateStart().getTime();
-        long anotherEventDuration = anotherEvent.getDateEnd().getTime() - getDateStart().getTime();
-        return thisEventDuration < anotherEventDuration ? -1 : thisEventDuration > anotherEventDuration ? 1 : 0;
+        long thisEventStart = this.getDateStart().getTime();
+        long anotherEventStart = anotherEvent.getDateStart().getTime();
+        return thisEventStart < anotherEventStart ? -1 : thisEventStart > anotherEventStart ? 1 : 0;
     }
 }
