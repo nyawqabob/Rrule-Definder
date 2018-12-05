@@ -9,6 +9,7 @@ import iba.by.algoritm.wrappers.IntervalWrapper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class FrequenceIntervalDefiner {
 
@@ -64,7 +65,12 @@ public class FrequenceIntervalDefiner {
         candidates.add(new FrequenceWrapper(RruleFreqType.DAILY, amountOfDurationsWhichMultipleToDay, minimumIntervalIfDay));
         candidates.add(new FrequenceWrapper(RruleFreqType.HOURLY, amountOfDurationsWhichMultipleToHour, minimumIntervalIfHour));
         candidates.add(new FrequenceWrapper(RruleFreqType.MINUTELY, amountOfDurationsWhichMultipleToMinute, minimumIntervalIfMinute));
-        FrequenceDefiner frequenceDefiner = new FrequenceDefiner();
-        return frequenceDefiner.defineFrequence(candidates, amountOfDurationsBetweenDates);
+        return chooseNeededFrequence(candidates, amountOfDurationsBetweenDates);
+    }
+
+    public FrequenceWrapper chooseNeededFrequence(List<FrequenceWrapper> frequenceWrappers, int realAmountOfDurations) {
+        Optional<FrequenceWrapper> neededFrequenceWrapper = frequenceWrappers.stream()
+                .filter(x -> x.getAmountOfDurationMultipleToFreq() == realAmountOfDurations).findFirst();
+        return neededFrequenceWrapper.get();
     }
 }
