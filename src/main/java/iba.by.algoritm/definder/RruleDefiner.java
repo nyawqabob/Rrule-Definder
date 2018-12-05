@@ -6,10 +6,10 @@ import iba.by.algoritm.wrappers.FrequenceWrapper;
 
 import java.util.*;
 
-public class ExdatesDefiner {
+public class RruleDefiner {
 
     public Rrule defineRrule(List<Event> events) {
-        RruleDefinder rruleDefinder = new RruleDefinder();
+        FrequenceIntervalDefiner frequenceIntervalDefiner = new FrequenceIntervalDefiner();
         Event lastEvent = events.get(events.size() - 1);
         Event firstEvent = events.get(0);
         Date startDateOfFirstEvent = firstEvent.getDateStart();
@@ -18,9 +18,9 @@ public class ExdatesDefiner {
         startCalendar.setTime(startDateOfFirstEvent);
         Calendar endCalendar = new GregorianCalendar();
         endCalendar.setTime(startDateOfLastEvent);
-        List<Date> startDatesOfEvents = new ArrayList<>(events.size());
+        List<Date> startDatesOfEvents = new LinkedList();
         events.forEach(x -> startDatesOfEvents.add(x.getDateStart()));
-        FrequenceWrapper frequenceWrapper = rruleDefinder.defineRruleFreqAndInterval(startDatesOfEvents);
+        FrequenceWrapper frequenceWrapper = frequenceIntervalDefiner.defineFreqAndInterval(startDatesOfEvents);
         Rrule rrule = new Rrule();
         if (frequenceWrapper.getMinimumIntervalOfFreq() == -1) {
             rrule.setInterval(1L);
@@ -30,8 +30,10 @@ public class ExdatesDefiner {
         rrule.setRruleFreqType(frequenceWrapper.getRruleFreqType());
         while (startCalendar.before(endCalendar)) {
             Date result = startCalendar.getTime();
-            if (!startDatesOfEvents.stream().anyMatch(result::equals)) {
+            if (!((LinkedList<Date>) startDatesOfEvents).getFirst().equals(result)) {
                 rrule.getExDates().add(result);
+            } else {
+                ((LinkedList<Date>) startDatesOfEvents).removeFirst();
             }
             startCalendar.add(rrule.getRruleFreqType().getFrequence(), rrule.getInterval().intValue());
         }

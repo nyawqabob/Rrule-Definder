@@ -1,6 +1,7 @@
 package iba.by.algoritm.definder;
 
 import iba.by.algoritm.constants.DateConstants;
+import iba.by.algoritm.constants.EnumConstants;
 import iba.by.algoritm.entity.RruleFreqType;
 import iba.by.algoritm.wrappers.FrequenceWrapper;
 import iba.by.algoritm.wrappers.IntervalWrapper;
@@ -9,9 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RruleDefinder {
+public class FrequenceIntervalDefiner {
 
-    public FrequenceWrapper defineRruleFreqAndInterval(List<Date> startDatesOfEvents) {
+    public FrequenceWrapper defineFreqAndInterval(List<Date> startDatesOfEvents) {
         final int amountOfDurationsBetweenDates = startDatesOfEvents.size() - 1;
         IntervalDefiner timeHandler = new IntervalDefiner();
         int amountOfDurationsWhichMultipleToMinute = 0;
@@ -22,22 +23,35 @@ public class RruleDefinder {
         long minimumIntervalIfHour = DateConstants.HOURS_IN_ONE_HUNDRED_YEARS;
         long minimumIntervalIfDay = DateConstants.DAYS_IN_ONE_HUNDRED_YEARS;
         long minimumIntervalIfWeek = DateConstants.WEEKS_IN_ONE_HUNDRED_YEARS;
+        int freqsToExclude = 0;
         for (int numberOfDates = 0; numberOfDates < amountOfDurationsBetweenDates; numberOfDates++) {
             long timeBetweenEvents = startDatesOfEvents.get(numberOfDates + 1).getTime() - startDatesOfEvents.get(numberOfDates).getTime();
-            IntervalWrapper intervalWrapperForWeek = timeHandler.defineInterval(RruleFreqType.WEEKLY, timeBetweenEvents, minimumIntervalIfWeek);
-            minimumIntervalIfWeek = intervalWrapperForWeek.getMinimumIntervalOfFreq();
-            if (intervalWrapperForWeek.isDurationMultipleToFreq()) {
-                amountOfDurationsWhichMultipleToWeek++;
+            if (freqsToExclude < DateConstants.VALUE_FOR_EXCLUDE_WEEK_FREQ) {
+                IntervalWrapper intervalWrapperForWeek = timeHandler.defineInterval(RruleFreqType.WEEKLY, timeBetweenEvents, minimumIntervalIfWeek);
+                minimumIntervalIfWeek = intervalWrapperForWeek.getMinimumIntervalOfFreq();
+                if (intervalWrapperForWeek.isDurationMultipleToFreq()) {
+                    amountOfDurationsWhichMultipleToWeek++;
+                } else {
+                    freqsToExclude += EnumConstants.ORDINAL_OF_WEEKLY;
+                }
             }
-            IntervalWrapper intervalWrapperForDay = timeHandler.defineInterval(RruleFreqType.DAILY, timeBetweenEvents, minimumIntervalIfDay);
-            minimumIntervalIfDay = intervalWrapperForDay.getMinimumIntervalOfFreq();
-            if (intervalWrapperForDay.isDurationMultipleToFreq()) {
-                amountOfDurationsWhichMultipleToDay++;
+            if (freqsToExclude < DateConstants.VALUE_FOR_EXCLUDE_DAILY_FREQ) {
+                IntervalWrapper intervalWrapperForDay = timeHandler.defineInterval(RruleFreqType.DAILY, timeBetweenEvents, minimumIntervalIfDay);
+                minimumIntervalIfDay = intervalWrapperForDay.getMinimumIntervalOfFreq();
+                if (intervalWrapperForDay.isDurationMultipleToFreq()) {
+                    amountOfDurationsWhichMultipleToDay++;
+                } else {
+                    freqsToExclude += EnumConstants.ORDINAL_OF_DAILY;
+                }
             }
-            IntervalWrapper intervalWrapperForHour = timeHandler.defineInterval(RruleFreqType.HOURLY, timeBetweenEvents, minimumIntervalIfHour);
-            minimumIntervalIfHour = intervalWrapperForHour.getMinimumIntervalOfFreq();
-            if (intervalWrapperForHour.isDurationMultipleToFreq()) {
-                amountOfDurationsWhichMultipleToHour++;
+            if (freqsToExclude < DateConstants.VALUE_FOR_EXCLUDE_HOURLY_FREQ) {
+                IntervalWrapper intervalWrapperForHour = timeHandler.defineInterval(RruleFreqType.HOURLY, timeBetweenEvents, minimumIntervalIfHour);
+                minimumIntervalIfHour = intervalWrapperForHour.getMinimumIntervalOfFreq();
+                if (intervalWrapperForHour.isDurationMultipleToFreq()) {
+                    amountOfDurationsWhichMultipleToHour++;
+                } else {
+                    freqsToExclude += EnumConstants.ORDINAL_OF_HOURLY;
+                }
             }
             IntervalWrapper intervalWrapperForMinute = timeHandler.defineInterval(RruleFreqType.MINUTELY, timeBetweenEvents, minimumIntervalIfMinute);
             minimumIntervalIfMinute = intervalWrapperForMinute.getMinimumIntervalOfFreq();
@@ -51,8 +65,6 @@ public class RruleDefinder {
         candidates.add(new FrequenceWrapper(RruleFreqType.HOURLY, amountOfDurationsWhichMultipleToHour, minimumIntervalIfHour));
         candidates.add(new FrequenceWrapper(RruleFreqType.MINUTELY, amountOfDurationsWhichMultipleToMinute, minimumIntervalIfMinute));
         FrequenceDefinder frequenceDefinder = new FrequenceDefinder();
-        return  frequenceDefinder.defineFrequence(candidates, amountOfDurationsBetweenDates);
-
+        return frequenceDefinder.defineFrequence(candidates, amountOfDurationsBetweenDates);
     }
-
 }

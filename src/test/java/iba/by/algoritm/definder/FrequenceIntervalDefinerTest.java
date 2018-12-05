@@ -6,9 +6,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class RruleDefinderTest {
+public class FrequenceIntervalDefinerTest {
 
-    private ExdatesDefiner exdatesDefiner = new ExdatesDefiner();
+    private RruleDefiner rruleDefiner = new RruleDefiner();
     private EventSorter eventSorter;
 
 
@@ -23,7 +23,7 @@ public class RruleDefinderTest {
         Data.getFirstEvents().forEach(x -> eventSorter.addEvent(x));
         eventSorter.sortEvents();
         //when
-        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
+        Rrule rrule = rruleDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_FIRST_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_FIRST_DATES);
@@ -36,7 +36,7 @@ public class RruleDefinderTest {
         Data.getSecondEvents().forEach(x -> eventSorter.addEvent(x));
         eventSorter.sortEvents();
         //when
-        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
+        Rrule rrule = rruleDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_SECOND_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_FSECOND_DATES);
@@ -49,7 +49,7 @@ public class RruleDefinderTest {
         Data.getThirdEvents().forEach(x -> eventSorter.addEvent(x));
         eventSorter.sortEvents();
         //when
-        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
+        Rrule rrule = rruleDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_THIRD_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_THIRD_DATES);
@@ -62,7 +62,7 @@ public class RruleDefinderTest {
         Data.getFourthEvents().forEach(x -> eventSorter.addEvent(x));
         eventSorter.sortEvents();
         //when
-        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
+        Rrule rrule = rruleDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_FOURTH_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_FOURTH_DATES);
@@ -75,7 +75,7 @@ public class RruleDefinderTest {
         Data.getFifthEvents().forEach(x -> eventSorter.addEvent(x));
         eventSorter.sortEvents();
         //when
-        Rrule rrule = exdatesDefiner.defineRrule(eventSorter.getEvents());
+        Rrule rrule = rruleDefiner.defineRrule(eventSorter.getEvents());
         //then
         Assert.assertEquals(rrule.getInterval(), Data.INTERVAL_FOR_FIFTH_DATES);
         Assert.assertEquals(rrule.getRruleFreqType(), Data.FREQ_FOR_FIFTH_DATES);
