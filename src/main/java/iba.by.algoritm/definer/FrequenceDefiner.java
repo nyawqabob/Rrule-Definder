@@ -1,11 +1,11 @@
-package iba.by.algoritm.definder;
+package iba.by.algoritm.definer;
 
 import iba.by.algoritm.wrappers.FrequenceWrapper;
 
 import java.util.List;
 import java.util.Optional;
 
-public class FrequenceDefinder {
+public class FrequenceDefiner {
 
     public FrequenceWrapper defineFrequence(List<FrequenceWrapper> frequenceWrappers, int realAmountOfDurations) {
         Optional<FrequenceWrapper> neededFrequenceWrapper = frequenceWrappers.stream()

@@ -1,4 +1,4 @@
-package iba.by.algoritm.definder;
+package iba.by.algoritm.definer;
 
 import iba.by.algoritm.entity.Rrule;
 import iba.by.algoritm.handler.EventSorter;

@@ -1,4 +1,4 @@
-package iba.by.algoritm.definder;
+package iba.by.algoritm.definer;
 
 import iba.by.algoritm.constants.DateConstants;
 import iba.by.algoritm.constants.EnumConstants;
@@ -64,7 +64,7 @@ public class FrequenceIntervalDefiner {
         candidates.add(new FrequenceWrapper(RruleFreqType.DAILY, amountOfDurationsWhichMultipleToDay, minimumIntervalIfDay));
         candidates.add(new FrequenceWrapper(RruleFreqType.HOURLY, amountOfDurationsWhichMultipleToHour, minimumIntervalIfHour));
         candidates.add(new FrequenceWrapper(RruleFreqType.MINUTELY, amountOfDurationsWhichMultipleToMinute, minimumIntervalIfMinute));
-        FrequenceDefinder frequenceDefinder = new FrequenceDefinder();
-        return frequenceDefinder.defineFrequence(candidates, amountOfDurationsBetweenDates);
+        FrequenceDefiner frequenceDefiner = new FrequenceDefiner();
+        return frequenceDefiner.defineFrequence(candidates, amountOfDurationsBetweenDates);
     }
 }
