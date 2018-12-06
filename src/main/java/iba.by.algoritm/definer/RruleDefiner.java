@@ -22,11 +22,7 @@ public class RruleDefiner {
         events.forEach(x -> startDatesOfEvents.add(x.getDateStart()));
         FrequenceWrapper frequenceWrapper = frequenceIntervalDefiner.defineFreqAndInterval(startDatesOfEvents);
         Rrule rrule = new Rrule();
-        if (frequenceWrapper.getMinimumIntervalOfFreq() == -1) {
-            rrule.setInterval(1L);
-        } else {
-            rrule.setInterval(frequenceWrapper.getMinimumIntervalOfFreq());
-        }
+        rrule.setInterval(frequenceWrapper.getMinimumIntervalOfFreq());
         rrule.setRruleFreqType(frequenceWrapper.getRruleFreqType());
         while (startCalendar.before(endCalendar)) {
             Date result = startCalendar.getTime();

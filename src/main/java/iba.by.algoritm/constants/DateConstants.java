@@ -15,5 +15,6 @@ public class DateConstants {
     public static final int VALUE_FOR_EXCLUDE_WEEK_FREQ = EnumConstants.ORDINAL_OF_WEEKLY;
     public static final int VALUE_FOR_EXCLUDE_DAILY_FREQ = EnumConstants.ORDINAL_OF_WEEKLY + EnumConstants.ORDINAL_OF_DAILY;
     public static final int VALUE_FOR_EXCLUDE_HOURLY_FREQ = EnumConstants.ORDINAL_OF_WEEKLY + EnumConstants.ORDINAL_OF_DAILY + EnumConstants.ORDINAL_OF_HOURLY;
+    public static final int VALUE_FOR_DEFAULT_INTERVAL = 1;
 
 }

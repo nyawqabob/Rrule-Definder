@@ -5,6 +5,8 @@ import iba.by.algoritm.constants.EnumConstants;
 import iba.by.algoritm.entity.RruleFreqType;
 import iba.by.algoritm.wrappers.IntervalWrapper;
 
+import java.util.Date;
+
 public class IntervalDefiner {
 
     public IntervalWrapper defineInterval(RruleFreqType rruleFreqType, long timeBetweenEvents, long minimumInterval) {
@@ -35,10 +37,10 @@ public class IntervalDefiner {
                 if (minimumInterval % possibleInterval == 0 || minimumInterval == freqsInOneHundredYears) {
                     intervalWrapper.setMinimumIntervalOfFreq(possibleInterval);
                 } else {
-                    intervalWrapper.setMinimumIntervalOfFreq(-1);
+                    intervalWrapper.setMinimumIntervalOfFreq(DateConstants.VALUE_FOR_DEFAULT_INTERVAL);
                 }
             } else if (!((possibleInterval) % minimumInterval == 0)) {
-                intervalWrapper.setMinimumIntervalOfFreq(-1);
+                intervalWrapper.setMinimumIntervalOfFreq(DateConstants.VALUE_FOR_DEFAULT_INTERVAL);
             }
         }
         return intervalWrapper;
