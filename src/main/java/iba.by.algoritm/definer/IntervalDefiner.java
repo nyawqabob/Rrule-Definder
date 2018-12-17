@@ -5,8 +5,6 @@ import iba.by.algoritm.constants.EnumConstants;
 import iba.by.algoritm.entity.RruleFreqType;
 import iba.by.algoritm.wrappers.IntervalWrapper;
 
-import java.util.Date;
-
 public class IntervalDefiner {
 
     public IntervalWrapper defineInterval(RruleFreqType rruleFreqType, long timeBetweenEvents, long minimumInterval) {
@@ -14,7 +12,7 @@ public class IntervalDefiner {
         long millisecondsInFreq = 0;
         long freqsInOneHundredYears = 0;
         switch (rruleFreqType.ordinal()) {
-            case EnumConstants.ORDINAL_OF_WEEKLY:
+            case EnumConstants.ORDINAL_OF_WEEKLY:        // REMAKE USING 63 PAGE OF CLEAN CODE
                 millisecondsInFreq = DateConstants.MILLISECONDS_IN_WEEK;
                 freqsInOneHundredYears = DateConstants.WEEKS_IN_ONE_HUNDRED_YEARS;
                 break;
@@ -32,20 +30,21 @@ public class IntervalDefiner {
         }
         if (timeBetweenEvents % millisecondsInFreq == 0) {
             intervalWrapper.setDurationMultipleToFreq(true);
-            long possibleInterval = timeBetweenEvents / millisecondsInFreq;
-            if (possibleInterval < minimumInterval) {
-                if (minimumInterval % possibleInterval == 0 || minimumInterval == freqsInOneHundredYears) {
-                    intervalWrapper.setMinimumIntervalOfFreq(possibleInterval);
-                } else {
+            if (!(minimumInterval == DateConstants.VALUE_FOR_DEFAULT_INTERVAL)) {
+                long possibleInterval = timeBetweenEvents / millisecondsInFreq;
+                if (possibleInterval < minimumInterval) {
+                    if (minimumInterval % possibleInterval == 0 || minimumInterval == freqsInOneHundredYears) {
+                        intervalWrapper.setMinimumIntervalOfFreq(possibleInterval);
+                    } else {
+                        intervalWrapper.setMinimumIntervalOfFreq(DateConstants.VALUE_FOR_DEFAULT_INTERVAL);
+                    }
+                } else if (!((possibleInterval) % minimumInterval == 0)) {
                     intervalWrapper.setMinimumIntervalOfFreq(DateConstants.VALUE_FOR_DEFAULT_INTERVAL);
                 }
-            } else if (!((possibleInterval) % minimumInterval == 0)) {
-                intervalWrapper.setMinimumIntervalOfFreq(DateConstants.VALUE_FOR_DEFAULT_INTERVAL);
             }
         }
         return intervalWrapper;
     }
-
 
 
 }
